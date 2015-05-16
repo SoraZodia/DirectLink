@@ -60,7 +60,6 @@ public class InputGUI extends JPanel implements FocusListener {
 
 
   private void prepareCompoundLayout() {
-    this.add(Box.createRigidArea(new Dimension(0, 5)));
     this.add(inputDia);
     this.add(input);
     this.add(outputDia);
