@@ -7,8 +7,8 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.MouseEvent;
-import javax.swing.GroupLayout;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,26 +25,31 @@ import sorazodia.directlink.DirectLink;
 public class InputGUI extends JPanel implements FocusListener {
   private JLabel inputDia = new JLabel();
   private JLabel outputDia = new JLabel();
-  private JTextField input = new JTextField(20);
-  private JTextField output = new JTextField(20);
-  private GroupLayout layoutManager;
+  private JTextField input = new JTextField(100);
+  private JTextField output = new JTextField(100);
   private String directLink = "";
 
 
   private InputGUI() {
-    layoutManager = new GroupLayout(this);
-    this.setLayout(layoutManager);
-    this.setPreferredSize(new Dimension(600, 250));
+    this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+    this.setPreferredSize(new Dimension(600, 80));
+    this.writeLabel();
+    this.prepareTextField();
+    this.prepareCompoundLayout();
   }
 
 
   private void prepareTextField() {
     input.addActionListener((ActionEvent action) -> {
       directLink = DirectLink.convertLink(input.getText());
+      DirectLink.addToClipboard(directLink);
       output.setText(directLink);
     });
+    input.setMaximumSize(input.getPreferredSize());
     input.addFocusListener(this);
-    output.setEditable(false);
+    output.setMaximumSize(output.getPreferredSize());
+    output.addFocusListener(this);
+    //output.setEditable(false);
   }
 
 
@@ -55,14 +60,21 @@ public class InputGUI extends JPanel implements FocusListener {
 
 
   private void prepareCompoundLayout() {
-
+    this.add(Box.createRigidArea(new Dimension(0, 5)));
+    this.add(inputDia);
+    this.add(input);
+    this.add(outputDia);
+    this.add(output);
   }
 
 
   public static void drawGUI() {
-    JFrame window = new JFrame();
+    JFrame window = new JFrame("Dropbox Link Convertor");
     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     window.add(new InputGUI());
+    
+    window.pack();
+    window.setVisible(true);
   }
 
 

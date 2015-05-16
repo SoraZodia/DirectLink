@@ -6,6 +6,7 @@ package sorazodia.directlink;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import sorazodia.directlink.gui.InputGUI;
 
 /**
  * Main Class that draws the GUI and convert Dropbox's public link to its direct link
@@ -25,13 +26,16 @@ public class DirectLink {
    * Draws the GUI and ready it for user's input
    */
   public static void main(String args[]) {
-    if (args.length == 0)
-      System.err.println("Please Input a Dropbox link");
-
-    String output = convertLink(args[0]);
-    addToClipboard(output);
-
-    System.out.println(output);
+    
+    InputGUI.drawGUI();
+    
+//    if (args.length == 0)
+//      System.err.println("Please Input a Dropbox link");
+//
+//    String output = convertLink(args[0]);
+//    addToClipboard(output);
+//
+//    System.out.println(output);
 
   }
 
