@@ -7,7 +7,6 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -41,15 +40,19 @@ public class InputGUI extends JPanel implements FocusListener {
 
   private void prepareTextField() {
     input.addActionListener((ActionEvent action) -> {
+      if (input.getText().isEmpty()) return;
+
       directLink = DirectLink.convertLink(input.getText());
-      DirectLink.addToClipboard(directLink);
+      if (!directLink.equalsIgnoreCase(DirectLink.INVALID))
+        DirectLink.addToClipboard(directLink);
+
       output.setText(directLink);
     });
     input.setMaximumSize(input.getPreferredSize());
     input.addFocusListener(this);
     output.setMaximumSize(output.getPreferredSize());
     output.addFocusListener(this);
-    //output.setEditable(false);
+    // output.setEditable(false);
   }
 
 
@@ -71,6 +74,7 @@ public class InputGUI extends JPanel implements FocusListener {
     JFrame window = new JFrame("Dropbox Link Convertor");
     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     window.add(new InputGUI());
+    window.setMinimumSize(new Dimension(600, 125));
     
     window.pack();
     window.setVisible(true);
