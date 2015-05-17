@@ -4,6 +4,7 @@
 package sorazodia.directlink.gui;
 
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -33,11 +34,10 @@ public class InputGUI extends JPanel implements FocusListener {
   /** Holds the direct download URL */
   private String directLink = "";
 
-
   /**
    * Creates a panel holding the input line and output line
    */
-  private InputGUI() {
+  protected InputGUI() {
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     this.setPreferredSize(new Dimension(600, 80));
     this.writeLabel();
@@ -92,11 +92,14 @@ public class InputGUI extends JPanel implements FocusListener {
    * Creates the GUI
    */
   public static void drawGUI() {
+    InputGUI inputPanel = new InputGUI();
+    
     JFrame window = new JFrame("Dropbox Link Convertor");
     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    window.add(new InputGUI());
+    window.add(inputPanel);
     window.setMinimumSize(new Dimension(600, 125));
-
+    window.setIconImage(Toolkit.getDefaultToolkit().getImage(inputPanel.getClass().getResource("/resources/icon.png")));
+    
     window.pack();
     window.setVisible(true);
   }
