@@ -22,13 +22,21 @@ import sorazodia.directlink.DirectLink;
  */
 @SuppressWarnings("serial")
 public class InputGUI extends JPanel implements FocusListener {
+  /** Label describing the input line */
   private JLabel inputDia = new JLabel();
+  /** Label describing the output line */
   private JLabel outputDia = new JLabel();
+  /** Where users type/paste in their Dropbox download */
   private JTextField input = new JTextField(100);
+  /** Where the direct download is placed */
   private JTextField output = new JTextField(100);
+  /** Holds the direct download URL */
   private String directLink = "";
 
 
+  /**
+   * Creates a panel holding the input line and output line
+   */
   private InputGUI() {
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     this.setPreferredSize(new Dimension(600, 80));
@@ -38,9 +46,13 @@ public class InputGUI extends JPanel implements FocusListener {
   }
 
 
+  /**
+   * Readies the input and output line for user interaction
+   */
   private void prepareTextField() {
     input.addActionListener((ActionEvent action) -> {
-      if (input.getText().isEmpty()) return;
+      if (input.getText().isEmpty())
+        return;
 
       directLink = DirectLink.convertLink(input.getText());
       if (!directLink.equalsIgnoreCase(DirectLink.INVALID))
@@ -56,12 +68,18 @@ public class InputGUI extends JPanel implements FocusListener {
   }
 
 
+  /**
+   * Adds the label to the label so the user can see the labels... I'll take my leave now
+   */
   private void writeLabel() {
     inputDia.setText("Link To Dropbox File");
     outputDia.setText("Direct Download Link");
   }
 
 
+  /**
+   * Add the GUI parts to the panel
+   */
   private void prepareCompoundLayout() {
     this.add(inputDia);
     this.add(input);
@@ -70,12 +88,15 @@ public class InputGUI extends JPanel implements FocusListener {
   }
 
 
+  /**
+   * Creates the GUI
+   */
   public static void drawGUI() {
     JFrame window = new JFrame("Dropbox Link Convertor");
     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     window.add(new InputGUI());
     window.setMinimumSize(new Dimension(600, 125));
-    
+
     window.pack();
     window.setVisible(true);
   }
