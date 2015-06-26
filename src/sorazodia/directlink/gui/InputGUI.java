@@ -115,6 +115,7 @@ public class InputGUI extends JPanel implements FocusListener {
     }
     else if (output.isFocusOwner()) {
       output.selectAll();
+      DirectLink.addToClipboard(output.getSelectedText());
     }
 
   }
